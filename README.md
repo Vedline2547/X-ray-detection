@@ -1,96 +1,97 @@
-# 🩻 X-ray Pneumonia Detection Using CNN
+# 🩻 X-Ray Pneumonia Detection
 
-## Overview
+A deep learning project that explores chest X-ray image classification to distinguish between **NORMAL** and **PNEUMONIA** cases using Convolutional Neural Networks (CNNs) and transfer learning with VGG16. The project also includes a **Streamlit web application** for interactive image uploads and model predictions.
 
-This project uses **Convolutional Neural Networks (CNNs)** with TensorFlow and Keras to classify chest X-ray images into two categories: **NORMAL** and **PNEUMONIA**.
+## 🚀 Project Overview
 
-The project demonstrates how deep learning and computer vision can be applied to medical image classification. Images are loaded using OpenCV, converted to grayscale, resized to a standard resolution, and normalized before being used to train a CNN model.
+Pneumonia is a respiratory infection that can affect the lungs. This project explores how computer vision and deep learning can be applied to chest X-ray image classification.
 
-The trained model can then process an unseen chest X-ray image and predict its classification.
+The project implements two approaches:
 
-## 🎯 Project Objectives
+- **Custom CNN:** A convolutional neural network trained for binary image classification.
+- **VGG16 Transfer Learning:** A pretrained VGG16 architecture adapted to the binary classification task.
+- **Streamlit App:** A web interface that allows users to upload an X-ray image and view the model's prediction.
 
-- Develop a CNN model for binary classification of chest X-ray images.
-- Apply image preprocessing techniques using OpenCV.
-- Train and validate a deep learning model using TensorFlow/Keras.
-- Save and reload a trained model for inference.
-- Visualize X-ray images alongside their predicted classifications.
+This is an educational machine learning project, not a clinically validated diagnostic system.
 
-## 🛠️ Technologies Used
+## 🎯 Objectives
 
-- **Python** — Core programming language
-- **TensorFlow & Keras** — Deep learning and CNN development
-- **OpenCV** — Image loading, grayscale conversion, and resizing
-- **NumPy** — Numerical operations and array manipulation
-- **Matplotlib** — Image visualization
-- **OS & Random** — File handling and dataset shuffling
+- Build a deep learning model for chest X-ray image classification.
+- Explore CNN architectures for medical image analysis.
+- Apply transfer learning using VGG16 pretrained on ImageNet.
+- Compare custom CNN and transfer-learning approaches.
+- Deploy a trained model through a Streamlit web application.
 
-## 📂 Dataset Structure
+## 🧠 Models
 
-The dataset is organized into two classes:
+### 1. Custom Convolutional Neural Network (CNN)
+
+The custom CNN learns image features through convolutional and pooling layers.
+
+Key components include:
+- Convolutional layers with ReLU activation.
+- Max-pooling layers.
+- Dropout for regularization.
+- Dense layers for classification.
+- Sigmoid output for binary prediction.
+
+### 2. VGG16 Transfer Learning
+
+VGG16 is a convolutional neural network pretrained on ImageNet. Its pretrained convolutional base can be used to extract image features for the chest X-ray classification task.
+
+The transfer-learning workflow includes:
+- Loading pretrained VGG16 weights.
+- Adapting the model for binary classification.
+- Freezing the pretrained base during initial training.
+- Adding classification layers for NORMAL and PNEUMONIA predictions.
+
+## 🌐 Streamlit Web Application
+
+The project includes an interactive web application that allows users to:
+
+- Upload a chest X-ray image.
+- Preview the uploaded image.
+- Run the trained model.
+- View the predicted class and model score.
+
+### Application Preview
+
+Run the app locally to explore the interface.
+
+## 🗂️ Project Structure
 
 ```text
 X-ray-detection/
+│
 ├── train/
 │   ├── NORMAL/
 │   └── PNEUMONIA/
-├── val/
-│   ├── NORMAL/
-│   └── PNEUMONIA/
+│
 ├── test/
 │   ├── NORMAL/
 │   └── PNEUMONIA/
-├── main.py
-├── requirements.txt
-├── .gitignore
+│
+├── app.py
+├── pretrained.py
+├── pretrained_model.h5
+├── model_10.h5
 └── README.md
 ```
 
-The dataset folders are excluded from the Git repository because of their size. Obtain the images from the original dataset source and arrange them according to the structure above.
+*Note: Adjust this structure to match the actual files in your repository. Only include model files that you have saved and intend to track in Git.*
 
-**Note:** The current implementation uses a folder named `test` for validation. For a rigorous evaluation, use a separate `val` directory during training and reserve `test` for final evaluation.
+## 🛠️ Technologies Used
 
-## ⚙️ Data Preprocessing
+- Python
+- TensorFlow / Keras
+- VGG16
+- NumPy
+- Pillow (PIL)
+- Matplotlib
+- OpenCV
+- Streamlit
 
-The project applies the following preprocessing steps:
-
-1. Load chest X-ray images from the dataset directories.
-2. Convert images to grayscale using OpenCV.
-3. Resize images to **100 × 100 pixels**.
-4. Assign numerical labels to each class:
-   - `NORMAL` → 0
-   - `PNEUMONIA` → 1
-5. Shuffle the training and validation samples.
-6. Reshape images into CNN-compatible arrays.
-7. Normalize pixel values from the range 0–255 to 0–1.
-
-## 🧠 CNN Architecture
-
-The model uses a sequential CNN architecture consisting of:
-
-- Three convolutional layers with 64, 128, and 256 filters.
-- ReLU activation functions.
-- Max-pooling layers for spatial downsampling.
-- Dropout layers for regularization.
-- A flattening layer.
-- A fully connected dense layer.
-- A sigmoid output layer for binary classification.
-
-The model is compiled using the Adam optimizer, binary cross-entropy loss, and accuracy as an evaluation metric.
-
-### Training Configuration
-
-| Parameter | Value |
-|---|---|
-| Image dimensions | 100 × 100 |
-| Image channels | 1 (grayscale) |
-| Batch size | 4 |
-| Maximum epochs | 10 |
-| Optimizer | Adam |
-| Loss function | Binary cross-entropy |
-| Output activation | Sigmoid |
-
-## 🚀 Getting Started
+## ⚙️ Installation
 
 ### 1. Clone the repository
 
@@ -99,96 +100,83 @@ git clone https://github.com/Vedline2547/X-ray-detection.git
 cd X-ray-detection
 ```
 
-### 2. Create and activate a virtual environment
+### 2. Create a virtual environment
 
-On Windows PowerShell:
+```bash
+python -m venv .venv
+```
+
+Activate it on Windows PowerShell:
 
 ```powershell
-python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
 ### 3. Install dependencies
 
-```powershell
-python -m pip install -r requirements.txt
+```bash
+python -m pip install tensorflow streamlit numpy pillow matplotlib opencv-python
 ```
 
-If you do not yet have a `requirements.txt`, install the main dependencies:
+## ▶️ Run the Streamlit App
 
-```powershell
-python -m pip install tensorflow opencv-python numpy matplotlib
-```
-
-### 4. Prepare the dataset
-
-Download the chest X-ray dataset from its original source and place the images into the appropriate class folders.
-
-Update the dataset paths in `main.py` to match your local directory structure.
-
-### 5. Train the model
+Ensure that the trained model file exists at the path configured in `app.py`. Update the model path if necessary.
 
 Run:
 
-```powershell
-python main.py
+```bash
+python -m streamlit run app.py
 ```
 
-The script loads and preprocesses the images, trains the CNN, and saves the trained model.
-
-### 6. Make predictions
-
-After training, load the saved model and pass a chest X-ray image through the preprocessing function to obtain a predicted class.
-
-## 💾 Model Saving and Inference
-
-The trained model can be saved in Keras format:
-
-```python
-model.save("model_10.keras")
-```
-
-Load it later using:
-
-```python
-import tensorflow as tf
-
-model = tf.keras.models.load_model("model_10.keras")
-```
-
-The model outputs a sigmoid score. With the current label mapping, a score of at least 0.5 is classified as `PNEUMONIA`, while a lower score is classified as `NORMAL`.
+Streamlit will provide a local URL to open the application in your browser.
 
 ## 📊 Evaluation
 
-The model uses validation data during training to monitor performance. Further evaluation should include:
+The models should be evaluated using a held-out test dataset. Useful metrics include:
 
 - Accuracy
 - Precision
-- Recall
+- Recall / sensitivity
 - F1-score
 - Confusion matrix
 
-Actual evaluation results should be added here after running the model on a separate, held-out test dataset.
+For this classification problem, recall for pneumonia cases is especially important to examine alongside false positives and false negatives.
+
+*Add your actual evaluation results here once measured. No performance figures are claimed in this README.*
+
+## 🔬 Learning Outcomes
+
+Through this project, I am exploring:
+
+- Image preprocessing and preparation for deep learning.
+- CNN architecture design and training.
+- Transfer learning with pretrained image-classification models.
+- Binary classification with TensorFlow/Keras.
+- Deploying machine learning models using Streamlit.
+- Building interactive interfaces for computer vision projects.
 
 ## 🔮 Future Improvements
 
-- Use data augmentation to improve generalization.
-- Introduce early stopping and learning-rate scheduling.
-- Compare the CNN against transfer-learning models such as MobileNetV2.
-- Evaluate performance using precision, recall, F1-score, and a confusion matrix.
-- Develop a simple web interface for uploading X-ray images and displaying predictions.
-- Optimize memory usage by loading images in batches.
-- Explore explainability techniques such as Grad-CAM to visualize image regions influencing predictions.
+- Compare CNN and VGG16 performance using the same test dataset.
+- Add precision, recall, F1-score, and confusion matrix reporting.
+- Experiment with data augmentation and fine-tuning.
+- Improve image preprocessing and prediction-time validation.
+- Deploy the application online.
+- Investigate model interpretability using Grad-CAM.
 
 ## ⚠️ Disclaimer
 
-This project is an educational machine-learning experiment and is **not intended for clinical diagnosis or medical decision-making**. Predictions may be incorrect and require rigorous validation before any potential real-world medical application.
+This project is intended for **educational and research purposes only**. It has not been established as a clinically validated medical device. Predictions may be incorrect and must not be used as the sole basis for diagnosis or treatment. Medical decisions should be made by qualified healthcare professionals.
 
 ## 👨‍💻 Author
 
 **Vedline Ochieng**
 
+Civil Engineering Student | Machine Learning Enthusiast | Python Developer
+
 - GitHub: [@Vedline2547](https://github.com/Vedline2547)
 - LinkedIn: [Vedline Ochieng](https://www.linkedin.com/in/vedline-ochieng-025146290/)
 
-*Exploring the intersection of artificial intelligence, deep learning, and practical problem-solving.*
+---
+
+*Exploring the intersection of deep learning, computer vision, and healthcare through practical machine learning projects.*
