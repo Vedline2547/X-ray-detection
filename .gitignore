@@ -1,0 +1,9 @@
+.venv/
+# Dataset folders
+train/
+test/
+val/
+validation/
+
+# Model files
+*.h5
